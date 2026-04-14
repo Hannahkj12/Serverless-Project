@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDC Sticker Shop | Official Collection</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        background-color: #fff5f8; /* Soft pink background */
+        margin: 0;
+        padding-bottom: 50px;
+      }
+      header {
+        background-color: white;
+        padding: 30px 0;
+        box-shadow: 0 4px 10px rgba(214, 51, 132, 0.1);
+        margin-bottom: 40px;
+      }
+      h1 {
+        color: #d63384;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .subtitle {
+        color: #555;
+        font-weight: 500;
+        margin-top: 10px;
+      }
+      .sticker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+        padding: 0 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .sticker-card {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px dashed #d63384; /* "Sticker sheet" look */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+      .sticker-card:hover {
+        transform: scale(1.05) rotate(2deg); /* Fun sticker pop effect */
+        box-shadow: 0 10px 20px rgba(214, 51, 132, 0.2);
+      }
+      img {
+        width: 100%;
+        height: 220px;
+        object-fit: contain; /* Better for sticker shapes */
+        background-color: #fcfcfc;
+        border-radius: 8px;
+      }
+      .sticker-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #333;
+        margin-top: 15px;
+      }
+      #status-message {
+        font-size: 1.1rem;
+        color: #d63384;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>PDC Official Sticker Shop</h1>
+      <p class="subtitle">Paradise Donut Co. Collectibles — Powered by AWS Serverless</p>
+    </header>
+
+    <div id="status-message">Fetching the latest drops...</div>
+    <div class="sticker-grid" id="sticker-grid"></div>
+
+    <script>
+      // REPLACE with your Terraform output URL
+      const API_URL = "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/prod/donuts";
+
+      async function loadStickers() {
+        try {
+          const response = await fetch(API_URL);
+          const stickers = await response.json();
+          
+          const grid = document.getElementById('sticker-grid');
+          const status = document.getElementById('status-message');
+
+          status.style.display = 'none';
+
+          grid.innerHTML = stickers.map(item => `
+            <div class="sticker-card">
+              <img src="${item.ImageURL}" alt="${item.Name}" />
+              <div class="sticker-name">${item.Name} Sticker</div>
+            </div>
+          `).join('');
+
+        } catch (error) {
+          console.error("Pipeline Error:", error);
+          document.getElementById('status-message').innerText = "Storefront currently offline. Check back soon!";
+        }
+      }
+
+      loadStickers();
+    </script>
+  </body>
+</html>
