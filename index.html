@@ -7,7 +7,7 @@
     <title>PDC Sticker Shop | Official Collection</title>
     <style>
       body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         text-align: center;
         background-color: #fff5f8; /* Soft pink background */
         margin: 0;
@@ -73,7 +73,9 @@
   <body>
     <header>
       <h1>PDC Official Sticker Shop</h1>
-      <p class="subtitle">Paradise Donut Co. Collectibles — Powered by AWS Serverless</p>
+      <p class="subtitle">
+        Paradise Donut Co. Collectibles — Powered by AWS Serverless
+      </p>
     </header>
 
     <div id="status-message">Fetching the latest drops...</div>
@@ -81,28 +83,33 @@
 
     <script>
       // REPLACE WITH YOUR API GATEWAY URL
-      const API_URL = "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/prod/donuts";
+      const API_URL =
+        "https://y2i1rl9wjg.execute-api.us-east-1.amazonaws.com/prod/donuts";
 
       async function loadStickers() {
         try {
           const response = await fetch(API_URL);
           const stickers = await response.json();
-          
-          const grid = document.getElementById('sticker-grid');
-          const status = document.getElementById('status-message');
 
-          status.style.display = 'none';
+          const grid = document.getElementById("sticker-grid");
+          const status = document.getElementById("status-message");
 
-          grid.innerHTML = stickers.map(item => `
+          status.style.display = "none";
+
+          grid.innerHTML = stickers
+            .map(
+              (item) => `
             <div class="sticker-card">
               <img src="${item.ImageURL}" alt="${item.Name}" />
               <div class="sticker-name">${item.Name} Sticker</div>
             </div>
-          `).join('');
-
+          `,
+            )
+            .join("");
         } catch (error) {
           console.error("Pipeline Error:", error);
-          document.getElementById('status-message').innerText = "Storefront currently offline. Check back soon!";
+          document.getElementById("status-message").innerText =
+            "Storefront currently offline. Check back soon!";
         }
       }
 
