@@ -16,7 +16,7 @@ resource "aws_dynamodb_table" "donuts" {
 
 # --- 2. S3 WEBSITE BUCKET ---
 resource "aws_s3_bucket" "site" {
-  bucket = "pdc-donut-sticker-bucket" # Ensure this is unique!
+  bucket = "pdc-donut-sticker-bucket"
 }
 
 resource "aws_s3_bucket_website_configuration" "site" {
