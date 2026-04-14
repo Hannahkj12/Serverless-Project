@@ -28,6 +28,8 @@ jobs:
           terraform apply -auto-approve
 
       - name: Seed DynamoDB Table
+        env:
+          AWS_DEFAULT_REGION: us-east-1
         run: |
           pip install boto3
           python seed_data.py
