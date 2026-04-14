@@ -27,6 +27,11 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
+      - name: Inject API URL into index.html
+        run: |
+          API_URL=$(terraform output -raw api_url)
+          sed -i "s|REPLACE_WITH_API_URL|$API_URL|g" index.html
+
       - name: Seed DynamoDB Table
         env:
           AWS_DEFAULT_REGION: us-east-1
