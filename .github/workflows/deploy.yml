@@ -27,6 +27,11 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
+      - name: Seed DynamoDB Table
+        run: |
+          pip install boto3
+          python seed_data.py
+
       - name: Sync Frontend & Images to S3
         run: |
           aws s3 sync . s3://pdc-donut-sticker-bucket --exclude "*" --include "index.html" --include "images/*"

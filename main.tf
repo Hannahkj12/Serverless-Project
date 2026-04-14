@@ -4,7 +4,7 @@ provider "aws" {
 
 # --- 1. DYNAMODB TABLE ---
 resource "aws_dynamodb_table" "donuts" {
-  name         = "PDC_Donuts"
+  name         = "PDC_Donut_Stickers"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "DonutID"
 
