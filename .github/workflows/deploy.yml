@@ -14,6 +14,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      - name: Zip Lambda Function
+        run: zip -j lambda_function.zip lambda/lambda_function.py
+
       - name: Terraform Init & Apply
         run: |
           terraform init
